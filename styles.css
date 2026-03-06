@@ -1,0 +1,844 @@
+body{
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+height:100vh;
+margin:0;
+background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
+font-family:'Orbitron', sans-serif;
+overflow: hidden;
+
+}
+
+.space {
+    position: relative;
+    width: 1200px; 
+    height: 1200px; 
+    perspective: 1000px;
+}
+
+.sun {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, #ffcc00, #ff8800);
+    border-radius: 50%;
+    box-shadow: 0 0 60px rgba(255, 204, 0, 0.5);
+    z-index: 100;
+}
+.mercury-orbit {
+    width: 140px;
+    height: 140px;
+    animation: orbit 2s linear infinite;
+    animation-delay: -1s;
+}
+.mercury{
+position:absolute;
+top: 0; 
+left: 50%; 
+transform: translate(-50%, -50%);
+  width: 12px; 
+  height: 12px; 
+  background: #a5a5a5; 
+  border-radius: 50%;
+}
+.venus-orbit { 
+  width: 210px; 
+  height: 210px; 
+  animation: orbit 6.1s linear infinite; 
+  animation-delay: -4s;
+}
+.venus { 
+  position: absolute; 
+  top: 0; 
+  left: 50%; 
+  transform: translate(-50%, -50%);
+   width: 22px;
+   height: 22px;
+    background: #e3bb76; 
+    border-radius: 50%; 
+}
+
+.earth-orbit {
+    width: 300px;
+    height: 300px;
+    animation: orbit 10s linear infinite;
+    animation-delay: -2s;
+}
+.earth{
+position:absolute;
+top:0;
+left:50%;
+width:25px ;
+height:25px;
+transform: translate(-50%, -50%);
+background: #2b82c9;
+border-radius: 50%;
+transform:translate(-50%, -50%);
+}
+.orbit {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    pointer-events: none; 
+    z-index: 1;
+}
+.moon-orbit { 
+  width: 45px; 
+  height: 45px; 
+  animation: orbit 2.7s linear infinite; 
+  animation-delay: -1s;
+}
+.moon{
+position:absolute;
+width: 6px;
+height: 6px;
+top:0;
+left:50%;
+transform: translate(-50%, -50%);
+background: #ddd;
+border-radius: 50%;
+box-shadow: 0 0 5px rgba(255,255,255,0.3);
+}
+.mars-orbit { 
+  width: 390px; 
+  height: 390px; 
+  animation: orbit 18.8s linear infinite; 
+  animation-delay: -5s;}
+.mars { 
+    position: absolute; 
+    top: 0; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    width: 18px; 
+    height: 18px; 
+    background: #e27b58;
+     border-radius: 50%; 
+}
+.phobos-orbit { 
+  width: 30px;
+  height: 30px; 
+  animation: orbit 1s linear infinite;
+  animation-delay: -0.5s;
+ }
+.deimos-orbit { 
+  width: 45px; 
+  height: 45px; 
+  animation: orbit 3s linear infinite; 
+  animation-delay: -1.5s;
+}
+.phobos, .deimos { 
+  position: absolute;
+   top: 0; 
+   left: 50%; 
+   transform: translate(-50%, -50%); border-radius: 50%; background: #9d8e87; 
+  }
+.phobos { 
+  width: 3px; 
+  height: 3px; 
+}
+.deimos { 
+  width: 2px; 
+  height: 2px;
+ }
+ 
+
+
+.asteroid-belt {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 470px;
+  height: 470px;
+  border-radius: 50%;
+  z-index: 5;
+  pointer-events: auto;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.asteroid-belt:hover {
+  filter: brightness(1.3);
+}
+
+
+.asteroid-belt::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgba(150, 150, 150, 0.6);
+  animation: asteroidDrift 120s linear infinite;
+  
+  box-shadow: 
+    
+    210px 15px 0 1px rgba(140,140,140,0.5),
+    -215px 25px 0 2px rgba(130,130,130,0.6),
+    85px 200px 0 1px rgba(145,145,145,0.4),
+    -95px -205px 0 2px rgba(135,135,135,0.7),
+    220px -35px 0 1px rgba(150,150,150,0.5),
+    -200px 95px 0 1px rgba(140,140,140,0.6),
+    155px 165px 0 2px rgba(155,155,155,0.4),
+    -175px -145px 0 1px rgba(145,145,145,0.5),
+    215px 105px 0 1px rgba(130,130,130,0.6),
+    -185px 135px 0 2px rgba(140,140,140,0.5),
+    125px -185px 0 1px rgba(145,145,145,0.4),
+    -205px -85px 0 1px rgba(150,150,150,0.5),
+    200px -125px 0 2px rgba(140,140,140,0.6),
+    -145px 195px 0 1px rgba(135,135,135,0.4),
+    75px 205px 0 1px rgba(145,145,145,0.5),
+    -210px 55px 0 2px rgba(150,150,150,0.6),
+    
+    
+    225px 65px 0 1px rgba(135,135,135,0.6),
+    -225px -75px 0 2px rgba(150,150,150,0.5),
+    125px -195px 0 1px rgba(140,140,140,0.4),
+    -225px 45px 0 1px rgba(145,145,145,0.6),
+    220px -85px 0 2px rgba(130,130,130,0.5),
+    -145px 195px 0 1px rgba(155,155,155,0.4),
+    175px 165px 0 1px rgba(140,140,140,0.6),
+    -205px -125px 0 2px rgba(145,145,145,0.5),
+    105px 205px 0 1px rgba(135,135,135,0.4),
+    -220px -55px 0 1px rgba(150,150,150,0.6),
+    195px -135px 0 2px rgba(140,140,140,0.5),
+    -175px 165px 0 1px rgba(145,145,145,0.4),
+    225px 95px 0 1px rgba(130,130,130,0.6),
+    -215px -105px 0 1px rgba(155,155,155,0.5),
+    65px 220px 0 1px rgba(140,140,140,0.4),
+    -225px 15px 0 2px rgba(145,145,145,0.6),
+    185px -175px 0 1px rgba(135,135,135,0.5),
+    -155px -205px 0 1px rgba(150,150,150,0.4),
+    
+    
+    230px -65px 0 2px rgba(140,140,140,0.5),
+    -230px 105px 0 1px rgba(145,145,145,0.4),
+    135px -220px 0 1px rgba(135,135,135,0.6),
+    -230px -85px 0 2px rgba(150,150,150,0.5),
+    230px 35px 0 1px rgba(140,140,140,0.4),
+    -165px 220px 0 1px rgba(145,145,145,0.6),
+    115px 220px 0 2px rgba(130,130,130,0.5),
+    -225px -135px 0 1px rgba(155,155,155,0.4),
+    225px 125px 0 1px rgba(140,140,140,0.6),
+    -205px 175px 0 2px rgba(145,145,145,0.5),
+    185px -195px 0 1px rgba(135,135,135,0.4),
+    -230px 75px 0 1px rgba(150,150,150,0.6),
+    230px -95px 0 2px rgba(140,140,140,0.5),
+    -225px -155px 0 1px rgba(145,145,145,0.4),
+    155px 205px 0 1px rgba(130,130,130,0.6),
+    -230px 135px 0 1px rgba(155,155,155,0.5),
+    45px 230px 0 2px rgba(140,140,140,0.4),
+    -195px -195px 0 1px rgba(145,145,145,0.5),
+    
+    
+    235px 5px 0 1px rgba(140,140,140,0.5),
+    -235px -25px 0 1px rgba(135,135,135,0.6),
+    95px 225px 0 2px rgba(145,145,145,0.4),
+    -145px -215px 0 1px rgba(150,150,150,0.5),
+    235px -115px 0 1px rgba(140,140,140,0.4),
+    -185px 205px 0 2px rgba(145,145,145,0.6),
+    165px -205px 0 1px rgba(135,135,135,0.5),
+    -230px 95px 0 1px rgba(150,150,150,0.4),
+    215px 145px 0 1px rgba(140,140,140,0.6),
+    -225px -115px 0 2px rgba(145,145,145,0.5),
+    135px 215px 0 1px rgba(135,135,135,0.4),
+    -210px 165px 0 1px rgba(150,150,150,0.5),
+    
+    
+    205px -155px 0 1px rgba(140,140,140,0.3),
+    -195px -175px 0 1px rgba(135,135,135,0.4),
+    165px 185px 0 1px rgba(145,145,145,0.3),
+    -215px 125px 0 1px rgba(150,150,150,0.4),
+    225px -145px 0 1px rgba(140,140,140,0.3),
+    -175px -195px 0 1px rgba(145,145,145,0.4),
+    85px 215px 0 1px rgba(135,135,135,0.3),
+    -230px -65px 0 1px rgba(150,150,150,0.4),
+    195px 175px 0 1px rgba(140,140,140,0.3),
+    -165px 215px 0 1px rgba(145,145,145,0.4),
+    145px -205px 0 1px rgba(135,135,135,0.3),
+    -220px 85px 0 1px rgba(150,150,150,0.4),
+    210px -95px 0 1px rgba(140,140,140,0.3),
+    -155px -220px 0 1px rgba(145,145,145,0.4),
+    55px 230px 0 1px rgba(135,135,135,0.3),
+    -235px 45px 0 1px rgba(150,150,150,0.4);
+}
+
+@keyframes asteroidDrift {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+
+@media (max-width: 1024px) {
+  .asteroid-belt::before {
+    box-shadow: 
+      210px 15px 0 2px rgba(140,140,140,0.6),
+      -215px 25px 0 2px rgba(130,130,130,0.7),
+      85px 200px 0 2px rgba(145,145,145,0.5),
+      -95px -205px 0 2px rgba(135,135,135,0.8),
+      220px -35px 0 2px rgba(150,150,150,0.6),
+      -200px 95px 0 2px rgba(140,140,140,0.7),
+      225px 65px 0 2px rgba(130,130,130,0.7),
+      -185px 135px 0 2px rgba(140,140,140,0.6),
+      230px -55px 0 2px rgba(135,135,135,0.7),
+      -225px -75px 0 2px rgba(150,150,150,0.6),
+      175px 165px 0 2px rgba(140,140,140,0.6),
+      -205px -125px 0 2px rgba(145,145,145,0.5),
+      225px 95px 0 2px rgba(130,130,130,0.6),
+      -215px -105px 0 2px rgba(155,155,155,0.5),
+      135px -220px 0 2px rgba(135,135,135,0.6);
+  }
+}
+
+
+@media (max-width: 768px) {
+  .asteroid-belt {
+    opacity: 0.6;
+  }
+  
+  .asteroid-belt::before {
+    box-shadow: 
+      210px 15px 0 3px rgba(140,140,140,0.7),
+      -215px 25px 0 3px rgba(130,130,130,0.8),
+      85px 200px 0 3px rgba(145,145,145,0.6),
+      -95px -205px 0 3px rgba(135,135,135,0.9),
+      220px -35px 0 3px rgba(150,150,150,0.7),
+      -200px 95px 0 3px rgba(140,140,140,0.8),
+      225px 65px 0 3px rgba(130,130,130,0.7);
+    animation-duration: 180s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .asteroid-belt::before {
+    animation: none;
+  }
+}
+
+
+
+
+
+
+.jupiter-orbit { 
+  width: 550px; 
+  height: 550px; 
+  animation: orbit 40s linear infinite; 
+    animation-delay: -10s;
+}
+.jupiter { 
+    position: absolute; 
+    top: 0; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    width: 50px; 
+    height: 50px;
+     background: radial-gradient(circle, #d39c7e, #6b4d3c); border-radius: 50%; 
+}
+.jupiter-rings {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 110px;
+    height: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) rotateX(80deg);
+    pointer-events: none;
+}
+.io-orbit { 
+  width: 70px; 
+  height: 70px;
+   animation: orbit 2s linear infinite; 
+  animation-delay: -0.5s;}
+.io { 
+  width: 4px; 
+  height: 4px; 
+  background: #f9e231; 
+} 
+
+.europa-orbit { width: 90px; 
+  height: 90px; 
+  animation: orbit 4s linear infinite; 
+  animation-delay: -1s;}
+.europa { 
+  width: 3.5px; 
+  height: 3.5px; 
+  background: #fdf5e6; 
+}
+
+.ganymede-orbit { 
+  width: 115px; 
+  height: 115px; 
+  animation: orbit 7s linear infinite; 
+  animation-delay: -2s;}
+.ganymede { 
+  width: 5px; 
+  height: 5px; 
+  background: #95877c; }
+  .io, .europa, .ganymede {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+}
+    
+
+
+.saturn-orbit { 
+  width: 700px;
+   height: 700px; 
+   animation: orbit 60s linear infinite; 
+  animation-delay: -15s;}
+.saturn { 
+    position: absolute; 
+    top: 0; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    width: 45px; 
+    height: 45px;
+     background: #c5ab6e; 
+     border-radius: 50%; 
+}
+.saturn-rings {
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    width: 90px; 
+    height: 20px;
+    border: 4px solid rgba(197, 171, 110, 0.6); 
+    border-radius: 50%; 
+    transform: translate(-50%, -50%) rotateX(75deg);
+
+}
+.titan-orbit { 
+  width: 120px; 
+  height: 120px; 
+  animation: orbit 10s linear infinite; 
+  animation-delay: -3s;}
+.titan { 
+  width: 6px; 
+  height: 6px; 
+  background: #e3bb76; 
+}
+
+
+.uranus-orbit {
+    width: 850px; 
+    height: 850px;
+    animation: orbit 80s linear infinite;
+      animation-delay: -20s;
+}
+
+.uranus { 
+    position: absolute; 
+    top: 0; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    width: 30px; 
+    height: 30px; 
+    background: #b3d1d1; 
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(179, 209, 209, 0.3);
+}
+.uranus-rings {
+    position: absolute; 
+    top: 50%; 
+    left: 50%;
+     width: 60px; 
+     height: 25px;
+    border: 1px solid rgba(179, 209, 209, 0.5);
+     border-radius: 50%; 
+     transform: translate(-50%, -50%) rotateX(75deg);
+
+}
+.titania-orbit {
+   width: 50px; 
+  height: 50px; 
+  animation: orbit 5s linear infinite;
+    animation-delay: -1s;
+ }
+.titania { 
+  width: 3px; 
+  height: 3px; 
+  background: #dcdcdc; }
+.neptune-orbit { 
+  width: 960px; 
+  height: 960px; 
+  animation: orbit 120s linear infinite; 
+  animation-delay: -30s;}
+.neptune { 
+    position: absolute; 
+    top: 0; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    width: 30px;
+     height: 30px; 
+     background: #6081ff; 
+     border-radius: 50%; 
+}
+.triton-orbit { 
+    width: 60px; 
+    height: 60px; 
+    animation: orbit 6s linear infinite reverse; 
+    animation-delay: -1s;
+}
+.triton { 
+  width: 4px; 
+  height: 4px; 
+  background: #d2f8f8; }
+  .pluto-orbit { 
+    width: 1100px; 
+    height: 1100px; 
+    animation: orbit 150s linear infinite; 
+    animation-delay: -40s;
+}
+.pluto {
+    position: absolute; 
+    top: 0; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    width: 10px; 
+    height: 10px; 
+    background: #7f7f7f; 
+    border-radius: 50%;
+    pointer-events: auto !important;
+    z-index: 1001;
+    cursor: pointer;
+}
+.charon-orbit { 
+    width: 20px; 
+    height: 20px; 
+    animation: orbit 1s linear infinite reverse; 
+    animation-delay: -0.5s;
+}
+.charon {
+  width: 2px; 
+  height: 2px; 
+  background: #a5a5a5; 
+}
+
+@keyframes orbit{
+  from{
+  transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to{
+  transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+@media (max-width: 1024px) {
+    .space {
+        transform: scale(0.7);
+    }
+}
+
+@media (max-width: 768px) {
+    .space {
+        transform: scale(0.5);
+    }
+    
+    .asteroid-belt {
+        opacity: 0.3; 
+    }
+}
+
+@media (max-width: 480px) {
+    .space {
+        transform: scale(0.35);
+    }
+    
+    
+    .orbit {
+        border-width: 2px;
+    }
+}
+
+.satellite {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+}
+
+.sun, .mercury, .venus, .earth, .mars, .jupiter, .saturn, .uranus, .neptune, .pluto, .satellite {
+    pointer-events: auto !important; 
+    z-index: 999; 
+    cursor: pointer;
+}
+
+#planet-info {
+  position: fixed !important;
+  background: rgba(0, 0, 0, 0.9);
+  color: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #00d4ff;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 10000;
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform: scale(0.8);
+  font-family: 'Orbitron', sans-serif;
+  max-width: 270px; 
+  width: max-content;
+}
+
+#planet-info.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+
+
+#modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(5px);
+  z-index: 9998;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+#planet-modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  animation: terminalBoot 0.5s ease;
+}
+
+@keyframes terminalBoot {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.95);
+    filter: blur(10px);
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    filter: blur(0);
+  }
+}
+
+.modal-container {
+  position: relative;
+  width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+  background: #000;
+  border: 3px solid #00ff00;
+  border-radius: 0; 
+  padding: 30px;
+  box-shadow: 
+    0 0 20px rgba(0, 255, 0, 0.5),
+    0 0 40px rgba(0, 255, 0, 0.3),
+    inset 0 0 50px rgba(0, 255, 0, 0.05);
+  font-family: 'Courier New', monospace; 
+  color: #00ff00;
+  animation: screenFlicker 0.1s infinite;
+}
+
+
+@keyframes screenFlicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.98; }
+}
+
+
+.scanlines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.1),
+    rgba(0, 0, 0, 0.1) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+  opacity: 0.5;
+  z-index: 10;
+}
+
+
+.hologram-effect {
+  display: none;
+}
+
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #000;
+  border: 2px solid #00ff00;
+  color: #00ff00;
+  font-size: 20px;
+  font-family: 'Courier New', monospace;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 20;
+}
+
+.close-btn:hover {
+  background: #00ff00;
+  color: #000;
+  box-shadow: 0 0 15px #00ff00;
+}
+
+
+.terminal-container {
+  position: relative;
+  z-index: 5;
+  line-height: 1.8;
+}
+
+
+.terminal-line {
+  font-size: 14px;
+  color: #00ff00;
+  text-shadow: 
+    0 0 5px rgba(0, 255, 0, 0.8),
+    0 0 10px rgba(0, 255, 0, 0.4);
+  margin: 2px 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-family: 'Courier New', monospace;
+}
+
+
+.cursor {
+  display: inline-block;
+  background: #00ff00;
+  color: #000;
+  animation: cursorBlink 0.7s infinite;
+  margin-left: 2px;
+}
+
+@keyframes cursorBlink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+
+.terminal-line:first-child,
+.terminal-line:nth-child(2) {
+  color: #00cc00;
+  font-weight: bold;
+}
+
+
+.terminal-line:contains('>>') {
+  color: #00ff00;
+  font-weight: bold;
+  margin-top: 10px;
+  text-decoration: underline;
+}
+
+
+.terminal-line:nth-child(4) {
+  font-size: 24px;
+  color: #00ff00;
+  text-shadow: 
+    0 0 10px rgba(0, 255, 0, 1),
+    0 0 20px rgba(0, 255, 0, 0.5);
+  margin: 10px 0;
+}
+
+.terminal-line:nth-child(5) {
+  font-style: italic;
+  color: #00cc00;
+  margin-bottom: 10px;
+}
+
+
+.modal-container::-webkit-scrollbar {
+  width: 10px;
+}
+
+.modal-container::-webkit-scrollbar-track {
+  background: #000;
+  border: 1px solid #00ff00;
+}
+
+.modal-container::-webkit-scrollbar-thumb {
+  background: #00ff00;
+  border: 1px solid #000;
+}
+
+.modal-container::-webkit-scrollbar-thumb:hover {
+  background: #00cc00;
+  box-shadow: 0 0 10px #00ff00;
+}
+
+
+.modal-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 0%,
+    rgba(0, 0, 0, 0.3) 100%
+  );
+  pointer-events: none;
+  z-index: 15;
+}
+
+
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+
+@media (max-width: 768px) {
+  .modal-container {
+    width: 95%;
+    max-width: 500px;
+    padding: 20px;
+    font-size: 12px;
+  }
+  
+  .terminal-line {
+    font-size: 12px;
+  }
+  
+  .terminal-line:nth-child(4) {
+    font-size: 20px;
+  }
+}
