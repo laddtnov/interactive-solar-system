@@ -499,3 +499,69 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Escape') closeModal();
   });
 });
+
+// ── Star Parallax ─────────────────────────────────────────
+(function initStarParallax() {
+  const canvas = document.getElementById('stars-bg');
+  const ctx = canvas.getContext('2d');
+
+  const STAR_COUNT = 220;
+  const PARALLAX_FACTOR = 0.05;
+  const LERP_SPEED = 0.07;
+
+  // Each star stores a normalised position (0–1) so it rescales with the window.
+  const stars = Array.from({ length: STAR_COUNT }, () => ({
+    nx: Math.random(),
+    ny: Math.random(),
+    radius: Math.random() * 1.4 + 0.3,
+    opacity: Math.random() * 0.6 + 0.3,
+  }));
+
+  let targetX = window.innerWidth  / 2;
+  let targetY = window.innerHeight / 2;
+  let smoothX  = targetX;
+  let smoothY  = targetY;
+
+  document.addEventListener('mousemove', (e) => {
+    targetX = e.clientX;
+    targetY = e.clientY;
+  });
+
+  function resize() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function drawStars() {
+    const w  = canvas.width;
+    const h  = canvas.height;
+    const cx = w / 2;
+    const cy = h / 2;
+
+    // Smooth interpolation toward the real mouse position.
+    smoothX += (targetX - smoothX) * LERP_SPEED;
+    smoothY += (targetY - smoothY) * LERP_SPEED;
+
+    // Parallax offset = (mousePos - center) * factor
+    const dx = (smoothX - cx) * PARALLAX_FACTOR;
+    const dy = (smoothY - cy) * PARALLAX_FACTOR;
+
+    ctx.clearRect(0, 0, w, h);
+
+    for (const star of stars) {
+      const sx = star.nx * w + dx;
+      const sy = star.ny * h + dy;
+
+      ctx.beginPath();
+      ctx.arc(sx, sy, star.radius, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
+      ctx.fill();
+    }
+
+    requestAnimationFrame(drawStars);
+  }
+
+  drawStars();
+}());
