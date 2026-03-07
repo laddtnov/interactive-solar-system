@@ -11,7 +11,7 @@
 An interactive 3D solar system simulation with Fallout 3-style terminal interface, real astronomical data, and typewriter sound effects.
 
 [🌐 Live Demo](https://interactive-solar-system-rose.vercel.app/) • [📁 View Code](https://interactive-solar-system-rose.vercel.app/)
-![Portfolio Preview](screenshot:desktop.png)![Portfolio Preview](screenshot:terminal.png)
+![Portfolio Preview](screenshot-desktop.png)![Portfolio Preview](screenshot-terminal.png)![Portfolio Preview](screenshot-mobile.png)!
 
 
 
