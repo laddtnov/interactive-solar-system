@@ -1,14 +1,15 @@
-body{
-display:flex;
-justify-content:center;
-align-items:center;
-text-align:center;
-height:100vh;
-margin:0;
-background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
-font-family:'Orbitron', sans-serif;
-overflow: hidden;
+/* ── Base ─────────────────────────────────────────────────────────────────── */
 
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100vh;
+  margin: 0;
+  background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
+  font-family: 'Orbitron', sans-serif;
+  overflow: hidden;
 }
 
 #stars-bg {
@@ -22,145 +23,279 @@ overflow: hidden;
 }
 
 .space {
-    position: relative;
-    width: 1200px;
-    height: 1200px;
-    perspective: 1000px;
-    z-index: 1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1200px;
+  height: 1200px;
+  transform: translate(-50%, -50%);
+  z-index: 1;
 }
+
+/* ── Trail Canvas ────────────────────────────────────────────────────────── */
+
+#trail-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* ── Speed HUD ───────────────────────────────────────────────────────────── */
+
+#speed-hud {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  font-family: 'Courier New', monospace;
+  color: #00ff00;
+  font-size: 16px;
+  z-index: 10000;
+  pointer-events: none;
+  text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+  letter-spacing: 2px;
+}
+
+#speed-controls {
+  position: fixed;
+  top: 40px;
+  left: 15px;
+  z-index: 10000;
+  display: flex;
+  gap: 5px;
+}
+
+#speed-controls button {
+  background: transparent;
+  border: 1px solid #00ff00;
+  color: #00ff00;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#speed-controls button:hover {
+  background: #00ff00;
+  color: #000;
+  box-shadow: 0 0 10px #00ff00;
+}
+
+/* ── Physics-positioned bodies — all absolute, driven by JS transform ──── */
+
+.sun, .mercury, .venus, .earth, .mars, .jupiter, .saturn,
+.uranus, .neptune, .pluto,
+.satellite {
+  position: absolute;
+  left: 0;
+  top: 0;
+  will-change: transform;
+  pointer-events: auto !important;
+  z-index: 999;
+  cursor: pointer;
+}
+
+/* ── Sun ─────────────────────────────────────────────────────────────────── */
 
 .sun {
-    position: absolute;
-    width: 80px;
-    height: 80px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: radial-gradient(circle, #ffcc00, #ff8800);
-    border-radius: 50%;
-    box-shadow: 0 0 60px rgba(255, 204, 0, 0.5);
-    z-index: 100;
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle, #ffcc00, #ff8800);
+  border-radius: 50%;
+  box-shadow: 0 0 60px rgba(255, 204, 0, 0.5);
+  z-index: 100;
 }
-.mercury-orbit {
-    width: 140px;
-    height: 140px;
-    animation: orbit 6s linear infinite;
-    animation-delay: -1s;
-}
-.mercury{
-position:absolute;
-top: 0; 
-left: 50%; 
-transform: translate(-50%, -50%);
-  width: 12px; 
-  height: 12px; 
-  background: #a5a5a5; 
+
+/* ── Planets ─────────────────────────────────────────────────────────────── */
+
+.mercury {
+  width: 12px;
+  height: 12px;
+  background: #a5a5a5;
   border-radius: 50%;
 }
-.venus-orbit { 
-  width: 210px; 
-  height: 210px; 
-  animation: orbit 6.1s linear infinite; 
-  animation-delay: -4s;
-}
-.venus { 
-  position: absolute; 
-  top: 0; 
-  left: 50%; 
-  transform: translate(-50%, -50%);
-   width: 22px;
-   height: 22px;
-    background: #e3bb76; 
-    border-radius: 50%; 
+
+.venus {
+  width: 22px;
+  height: 22px;
+  background: #e3bb76;
+  border-radius: 50%;
 }
 
-.earth-orbit {
-    width: 300px;
-    height: 300px;
-    animation: orbit 10s linear infinite;
-    animation-delay: -2s;
+.earth {
+  width: 25px;
+  height: 25px;
+  background: #2b82c9;
+  border-radius: 50%;
 }
-.earth{
-position:absolute;
-top:0;
-left:50%;
-width:25px ;
-height:25px;
-transform: translate(-50%, -50%);
-background: #2b82c9;
-border-radius: 50%;
-transform:translate(-50%, -50%);
+
+.mars {
+  width: 18px;
+  height: 18px;
+  background: #e27b58;
+  border-radius: 50%;
 }
-.orbit {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    pointer-events: none;
-    z-index: 10;
+
+.jupiter {
+  width: 50px;
+  height: 50px;
+  background: radial-gradient(circle, #d39c7e, #6b4d3c);
+  border-radius: 50%;
 }
-.moon-orbit { 
-  width: 45px; 
-  height: 45px; 
-  animation: orbit 2.7s linear infinite; 
-  animation-delay: -1s;
+
+.saturn {
+  width: 45px;
+  height: 45px;
+  background: #c5ab6e;
+  border-radius: 50%;
 }
-.moon{
-position:absolute;
-width: 6px;
-height: 6px;
-top:0;
-left:50%;
-transform: translate(-50%, -50%);
-background: #ddd;
-border-radius: 50%;
-box-shadow: 0 0 5px rgba(255,255,255,0.3);
-}
-.mars-orbit { 
-  width: 390px; 
-  height: 390px; 
-  animation: orbit 18.8s linear infinite; 
-  animation-delay: -5s;}
-.mars { 
-    position: absolute; 
-    top: 0; 
-    left: 50%; 
-    transform: translate(-50%, -50%);
-    width: 18px; 
-    height: 18px; 
-    background: #e27b58;
-     border-radius: 50%; 
-}
-.phobos-orbit { 
+
+.uranus {
   width: 30px;
-  height: 30px; 
-  animation: orbit 1s linear infinite;
-  animation-delay: -0.5s;
- }
-.deimos-orbit { 
-  width: 45px; 
-  height: 45px; 
-  animation: orbit 3s linear infinite; 
-  animation-delay: -1.5s;
+  height: 30px;
+  background: #b3d1d1;
+  border-radius: 50%;
+  box-shadow: 0 0 15px rgba(179, 209, 209, 0.3);
 }
-.phobos, .deimos { 
-  position: absolute;
-   top: 0; 
-   left: 50%; 
-   transform: translate(-50%, -50%); border-radius: 50%; background: #9d8e87; 
-  }
-.phobos { 
-  width: 3px; 
-  height: 3px; 
-}
-.deimos { 
-  width: 2px; 
-  height: 2px;
- }
- 
 
+.neptune {
+  width: 30px;
+  height: 30px;
+  background: #6081ff;
+  border-radius: 50%;
+}
+
+.pluto {
+  width: 10px;
+  height: 10px;
+  background: #7f7f7f;
+  border-radius: 50%;
+  z-index: 1001;
+}
+
+/* ── Rings (children of planet divs — move with parent automatically) ──── */
+
+.jupiter-rings {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 110px;
+  height: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) rotateX(80deg);
+  pointer-events: none;
+}
+
+.saturn-rings {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 90px;
+  height: 20px;
+  border: 4px solid rgba(197, 171, 110, 0.6);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) rotateX(75deg);
+  pointer-events: none;
+}
+
+.uranus-rings {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 60px;
+  height: 25px;
+  border: 1px solid rgba(179, 209, 209, 0.5);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) rotateX(75deg);
+  pointer-events: none;
+}
+
+.neptune-rings {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 55px;
+  height: 12px;
+  border: 1px solid rgba(96, 129, 255, 0.25);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) rotateX(80deg);
+  pointer-events: none;
+}
+
+/* ── Satellites / Moons ──────────────────────────────────────────────────── */
+
+.satellite {
+  border-radius: 50%;
+}
+
+.moon {
+  width: 6px;
+  height: 6px;
+  background: #ddd;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+}
+
+.phobos {
+  width: 3px;
+  height: 3px;
+  background: #9d8e87;
+}
+
+.deimos {
+  width: 2px;
+  height: 2px;
+  background: #9d8e87;
+}
+
+.io {
+  width: 4px;
+  height: 4px;
+  background: #f9e231;
+}
+
+.europa {
+  width: 3.5px;
+  height: 3.5px;
+  background: #fdf5e6;
+}
+
+.ganymede {
+  width: 5px;
+  height: 5px;
+  background: #95877c;
+}
+
+.titan {
+  width: 6px;
+  height: 6px;
+  background: #e3bb76;
+}
+
+.titania {
+  width: 3px;
+  height: 3px;
+  background: #dcdcdc;
+}
+
+.triton {
+  width: 4px;
+  height: 4px;
+  background: #d2f8f8;
+}
+
+.charon {
+  width: 2px;
+  height: 2px;
+  background: #a5a5a5;
+}
+
+/* ── Asteroid Belt (CSS-only, unchanged) ─────────────────────────────────── */
 
 .asteroid-belt {
   position: absolute;
@@ -180,7 +315,6 @@ box-shadow: 0 0 5px rgba(255,255,255,0.3);
   filter: brightness(1.3);
 }
 
-
 .asteroid-belt::before {
   content: '';
   position: absolute;
@@ -191,10 +325,7 @@ box-shadow: 0 0 5px rgba(255,255,255,0.3);
   border-radius: 50%;
   background: rgba(180, 175, 165, 0.8);
   animation: asteroidDrift 120s linear infinite;
-  
-  /* All positions: sqrt(x²+y²) between 200 and 235 */
   box-shadow:
-    /* r≈205 */
     205px 8px 0 1px rgba(160,155,145,0.7),
     -203px 20px 0 2px rgba(150,145,140,0.8),
     50px 199px 0 1px rgba(170,165,155,0.6),
@@ -205,7 +336,6 @@ box-shadow: 0 0 5px rgba(255,255,255,0.3);
     -103px 178px 0 2px rgba(160,155,145,0.8),
     145px 145px 0 1px rgba(170,165,155,0.6),
     -145px -145px 0 1px rgba(145,140,135,0.7),
-    /* r≈210 */
     210px -12px 0 1px rgba(155,150,140,0.8),
     -208px -30px 0 2px rgba(165,160,150,0.6),
     35px 207px 0 1px rgba(150,145,140,0.7),
@@ -216,7 +346,6 @@ box-shadow: 0 0 5px rgba(255,255,255,0.3);
     -105px -182px 0 2px rgba(165,160,150,0.6),
     148px -148px 0 1px rgba(150,145,140,0.7),
     -148px 148px 0 1px rgba(160,155,145,0.8),
-    /* r≈215 */
     215px 15px 0 2px rgba(170,165,155,0.6),
     -213px 25px 0 1px rgba(145,140,135,0.7),
     70px 204px 0 1px rgba(155,150,140,0.8),
@@ -227,7 +356,6 @@ box-shadow: 0 0 5px rgba(255,255,255,0.3);
     -108px 186px 0 1px rgba(145,140,135,0.7),
     152px 152px 0 1px rgba(155,150,140,0.8),
     -152px -152px 0 2px rgba(165,160,150,0.6),
-    /* r≈220 */
     220px -8px 0 1px rgba(150,145,140,0.7),
     -218px -35px 0 1px rgba(160,155,145,0.8),
     25px 219px 0 2px rgba(170,165,155,0.6),
@@ -238,7 +366,6 @@ box-shadow: 0 0 5px rgba(255,255,255,0.3);
     -110px 191px 0 1px rgba(160,155,145,0.8),
     156px -156px 0 2px rgba(170,165,155,0.6),
     -156px 156px 0 1px rgba(145,140,135,0.7),
-    /* r≈225 */
     225px 10px 0 1px rgba(155,150,140,0.8),
     -223px -18px 0 2px rgba(165,160,150,0.6),
     55px 218px 0 1px rgba(150,145,140,0.7),
@@ -249,7 +376,6 @@ box-shadow: 0 0 5px rgba(255,255,255,0.3);
     -113px -195px 0 2px rgba(165,160,150,0.6),
     159px 159px 0 1px rgba(150,145,140,0.7),
     -159px -159px 0 1px rgba(160,155,145,0.8),
-    /* r≈230 */
     230px -5px 0 2px rgba(170,165,155,0.6),
     -228px 22px 0 1px rgba(145,140,135,0.7),
     40px 227px 0 1px rgba(155,150,140,0.8),
@@ -260,7 +386,6 @@ box-shadow: 0 0 5px rgba(255,255,255,0.3);
     -115px 199px 0 1px rgba(145,140,135,0.7),
     163px -163px 0 1px rgba(155,150,140,0.8),
     -163px 163px 0 2px rgba(165,160,150,0.6),
-    /* r≈235 */
     235px 5px 0 1px rgba(150,145,140,0.7),
     -233px -15px 0 1px rgba(160,155,145,0.8),
     15px 234px 0 2px rgba(170,165,155,0.6),
@@ -271,7 +396,6 @@ box-shadow: 0 0 5px rgba(255,255,255,0.3);
     -118px -204px 0 1px rgba(160,155,145,0.8),
     166px 166px 0 2px rgba(170,165,155,0.6),
     -166px -166px 0 1px rgba(145,140,135,0.7),
-    /* Fill gaps */
     207px 40px 0 1px rgba(155,150,140,0.8),
     -210px -50px 0 2px rgba(165,160,150,0.6),
     85px 198px 0 1px rgba(150,145,140,0.7),
@@ -294,7 +418,6 @@ box-shadow: 0 0 5px rgba(255,255,255,0.3);
     -95px -210px 0 2px rgba(165,160,150,0.6);
 }
 
-/* Second asteroid layer — reverse rotation for density */
 .asteroid-belt::after {
   content: '';
   position: absolute;
@@ -306,10 +429,7 @@ box-shadow: 0 0 5px rgba(255,255,255,0.3);
   background: rgba(170, 165, 155, 0.7);
   animation: asteroidDrift2 90s linear infinite;
   pointer-events: none;
-
-  /* All positions constrained: sqrt(x²+y²) ≤ 235 */
   box-shadow:
-    /* r≈210, various angles */
     210px 5px 0 1px rgba(180,175,165,0.7),
     -208px 25px 0 1px rgba(170,165,155,0.8),
     55px 203px 0 2px rgba(175,170,160,0.6),
@@ -320,7 +440,6 @@ box-shadow: 0 0 5px rgba(255,255,255,0.3);
     -105px 182px 0 1px rgba(165,160,150,0.8),
     148px 148px 0 2px rgba(180,175,165,0.6),
     -148px -148px 0 1px rgba(170,165,155,0.7),
-    /* r≈215 */
     215px -10px 0 1px rgba(175,170,160,0.8),
     -213px -30px 0 2px rgba(165,160,150,0.6),
     30px 213px 0 1px rgba(180,175,165,0.7),
@@ -331,7 +450,6 @@ box-shadow: 0 0 5px rgba(255,255,255,0.3);
     -108px -186px 0 2px rgba(170,165,155,0.6),
     152px -152px 0 1px rgba(175,170,160,0.7),
     -152px 152px 0 1px rgba(165,160,150,0.8),
-    /* r≈220 */
     220px 15px 0 2px rgba(180,175,165,0.6),
     -218px 35px 0 1px rgba(170,165,155,0.7),
     80px 205px 0 1px rgba(175,170,160,0.8),
@@ -342,7 +460,6 @@ box-shadow: 0 0 5px rgba(255,255,255,0.3);
     -110px 191px 0 1px rgba(165,160,150,0.7),
     156px 156px 0 1px rgba(180,175,165,0.8),
     -156px -156px 0 2px rgba(170,165,155,0.6),
-    /* r≈225 */
     225px -8px 0 1px rgba(175,170,160,0.7),
     -223px -20px 0 1px rgba(165,160,150,0.8),
     20px 224px 0 2px rgba(180,175,165,0.6),
@@ -353,7 +470,6 @@ box-shadow: 0 0 5px rgba(255,255,255,0.3);
     -113px 195px 0 1px rgba(170,165,155,0.8),
     160px -160px 0 2px rgba(175,170,160,0.6),
     -160px 160px 0 1px rgba(165,160,150,0.7),
-    /* r≈230 */
     230px 10px 0 1px rgba(180,175,165,0.8),
     -228px -25px 0 2px rgba(170,165,155,0.6),
     60px 222px 0 1px rgba(175,170,160,0.7),
@@ -364,7 +480,6 @@ box-shadow: 0 0 5px rgba(255,255,255,0.3);
     -115px -199px 0 2px rgba(165,160,150,0.6),
     163px 163px 0 1px rgba(180,175,165,0.7),
     -163px -163px 0 1px rgba(170,165,155,0.8),
-    /* r≈235 */
     235px -5px 0 2px rgba(175,170,160,0.6),
     -233px 15px 0 1px rgba(165,160,150,0.7),
     45px 231px 0 1px rgba(180,175,165,0.8),
@@ -375,7 +490,6 @@ box-shadow: 0 0 5px rgba(255,255,255,0.3);
     -118px 204px 0 1px rgba(170,165,155,0.7),
     166px -166px 0 1px rgba(175,170,160,0.8),
     -166px 166px 0 2px rgba(165,160,150,0.6),
-    /* fill gaps at ~r=208-232 */
     207px 40px 0 1px rgba(180,175,165,0.7),
     -210px -50px 0 1px rgba(170,165,155,0.8),
     130px 175px 0 2px rgba(175,170,160,0.6),
@@ -398,18 +512,18 @@ box-shadow: 0 0 5px rgba(255,255,255,0.3);
 
 @keyframes asteroidDrift {
   from { transform: translate(-50%, -50%) rotate(0deg); }
-  to { transform: translate(-50%, -50%) rotate(360deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 @keyframes asteroidDrift2 {
   from { transform: translate(-50%, -50%) rotate(360deg); }
-  to { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(0deg); }
 }
 
-
+/* Asteroid belt responsive */
 @media (max-width: 1024px) {
   .asteroid-belt::before {
-    box-shadow: 
+    box-shadow:
       210px 15px 0 2px rgba(140,140,140,0.6),
       -215px 25px 0 2px rgba(130,130,130,0.7),
       85px 200px 0 2px rgba(145,145,145,0.5),
@@ -428,14 +542,12 @@ box-shadow: 0 0 5px rgba(255,255,255,0.3);
   }
 }
 
-
 @media (max-width: 768px) {
   .asteroid-belt {
     opacity: 0.6;
   }
-  
   .asteroid-belt::before {
-    box-shadow: 
+    box-shadow:
       210px 15px 0 3px rgba(140,140,140,0.7),
       -215px 25px 0 3px rgba(130,130,130,0.8),
       85px 200px 0 3px rgba(145,145,145,0.6),
@@ -453,258 +565,22 @@ box-shadow: 0 0 5px rgba(255,255,255,0.3);
   }
 }
 
+/* ── Responsive Scaling ──────────────────────────────────────────────────── */
 
-
-
-
-
-.jupiter-orbit { 
-  width: 550px; 
-  height: 550px; 
-  animation: orbit 40s linear infinite; 
-    animation-delay: -10s;
-}
-.jupiter { 
-    position: absolute; 
-    top: 0; 
-    left: 50%; 
-    transform: translate(-50%, -50%);
-    width: 50px; 
-    height: 50px;
-     background: radial-gradient(circle, #d39c7e, #6b4d3c); border-radius: 50%; 
-}
-.jupiter-rings {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 110px;
-    height: 15px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 50%;
-    transform: translate(-50%, -50%) rotateX(80deg);
-    pointer-events: none;
-}
-.io-orbit { 
-  width: 70px; 
-  height: 70px;
-   animation: orbit 2s linear infinite; 
-  animation-delay: -0.5s;}
-.io { 
-  width: 4px; 
-  height: 4px; 
-  background: #f9e231; 
-} 
-
-.europa-orbit { width: 90px; 
-  height: 90px; 
-  animation: orbit 4s linear infinite; 
-  animation-delay: -1s;}
-.europa { 
-  width: 3.5px; 
-  height: 3.5px; 
-  background: #fdf5e6; 
-}
-
-.ganymede-orbit { 
-  width: 115px; 
-  height: 115px; 
-  animation: orbit 7s linear infinite; 
-  animation-delay: -2s;}
-.ganymede { 
-  width: 5px; 
-  height: 5px; 
-  background: #95877c; }
-  .io, .europa, .ganymede {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-}
-    
-
-
-.saturn-orbit { 
-  width: 700px;
-   height: 700px; 
-   animation: orbit 60s linear infinite; 
-  animation-delay: -15s;}
-.saturn { 
-    position: absolute; 
-    top: 0; 
-    left: 50%; 
-    transform: translate(-50%, -50%);
-    width: 45px; 
-    height: 45px;
-     background: #c5ab6e; 
-     border-radius: 50%; 
-}
-.saturn-rings {
-    position: absolute; 
-    top: 50%; 
-    left: 50%; 
-    width: 90px; 
-    height: 20px;
-    border: 4px solid rgba(197, 171, 110, 0.6); 
-    border-radius: 50%; 
-    transform: translate(-50%, -50%) rotateX(75deg);
-
-}
-.titan-orbit { 
-  width: 120px; 
-  height: 120px; 
-  animation: orbit 10s linear infinite; 
-  animation-delay: -3s;}
-.titan { 
-  width: 6px; 
-  height: 6px; 
-  background: #e3bb76; 
-}
-
-
-.uranus-orbit {
-    width: 850px; 
-    height: 850px;
-    animation: orbit 80s linear infinite;
-      animation-delay: -20s;
-}
-
-.uranus { 
-    position: absolute; 
-    top: 0; 
-    left: 50%; 
-    transform: translate(-50%, -50%);
-    width: 30px; 
-    height: 30px; 
-    background: #b3d1d1; 
-    border-radius: 50%;
-    box-shadow: 0 0 15px rgba(179, 209, 209, 0.3);
-}
-.uranus-rings {
-    position: absolute; 
-    top: 50%; 
-    left: 50%;
-     width: 60px; 
-     height: 25px;
-    border: 1px solid rgba(179, 209, 209, 0.5);
-     border-radius: 50%; 
-     transform: translate(-50%, -50%) rotateX(75deg);
-
-}
-.titania-orbit {
-   width: 50px; 
-  height: 50px; 
-  animation: orbit 5s linear infinite;
-    animation-delay: -1s;
- }
-.titania { 
-  width: 3px; 
-  height: 3px; 
-  background: #dcdcdc; }
-.neptune-orbit { 
-  width: 960px; 
-  height: 960px; 
-  animation: orbit 120s linear infinite; 
-  animation-delay: -30s;}
-.neptune { 
-    position: absolute; 
-    top: 0; 
-    left: 50%; 
-    transform: translate(-50%, -50%);
-    width: 30px;
-     height: 30px; 
-     background: #6081ff; 
-     border-radius: 50%; 
-}
-.triton-orbit { 
-    width: 60px; 
-    height: 60px; 
-    animation: orbit 6s linear infinite reverse; 
-    animation-delay: -1s;
-}
-.triton { 
-  width: 4px; 
-  height: 4px; 
-  background: #d2f8f8; }
-  .pluto-orbit { 
-    width: 1100px; 
-    height: 1100px; 
-    animation: orbit 150s linear infinite; 
-    animation-delay: -40s;
-}
-.pluto {
-    position: absolute; 
-    top: 0; 
-    left: 50%; 
-    transform: translate(-50%, -50%);
-    width: 10px; 
-    height: 10px; 
-    background: #7f7f7f; 
-    border-radius: 50%;
-    pointer-events: auto !important;
-    z-index: 1001;
-    cursor: pointer;
-}
-.charon-orbit { 
-    width: 20px; 
-    height: 20px; 
-    animation: orbit 1s linear infinite reverse; 
-    animation-delay: -0.5s;
-}
-.charon {
-  width: 2px; 
-  height: 2px; 
-  background: #a5a5a5; 
-}
-
-@keyframes orbit{
-  from{
-  transform: translate(-50%, -50%) rotate(0deg);
-  }
-  to{
-  transform: translate(-50%, -50%) rotate(360deg);
-  }
-}
 @media (max-width: 1024px) {
-    .space {
-        transform: scale(0.7);
-    }
+  .space { transform: translate(-50%, -50%) scale(0.7); }
 }
 
 @media (max-width: 768px) {
-    .space {
-        transform: scale(0.5);
-    }
-    
-    .asteroid-belt {
-        opacity: 0.7;
-    }
+  .space { transform: translate(-50%, -50%) scale(0.5); }
+  .asteroid-belt { opacity: 0.7; }
 }
 
 @media (max-width: 480px) {
-    .space {
-        transform: scale(0.35);
-    }
-    
-    
-    .orbit {
-        border-width: 2px;
-    }
+  .space { transform: translate(-50%, -50%) scale(0.35); }
 }
 
-.satellite {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-}
-
-.sun, .mercury, .venus, .earth, .mars, .jupiter, .saturn, .uranus, .neptune, .pluto, .satellite {
-    pointer-events: auto !important; 
-    z-index: 999; 
-    cursor: pointer;
-}
+/* ── Tooltip ─────────────────────────────────────────────────────────────── */
 
 #planet-info {
   position: fixed !important;
@@ -719,7 +595,7 @@ box-shadow: 0 0 5px rgba(255,255,255,0.3);
   transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   transform: scale(0.8);
   font-family: 'Orbitron', sans-serif;
-  max-width: 270px; 
+  max-width: 270px;
   width: max-content;
 }
 
@@ -728,7 +604,7 @@ box-shadow: 0 0 5px rgba(255,255,255,0.3);
   transform: scale(1);
 }
 
-
+/* ── Modal ───────────────────────────────────────────────────────────────── */
 
 #modal-overlay {
   display: none;
@@ -745,7 +621,7 @@ box-shadow: 0 0 5px rgba(255,255,255,0.3);
 
 @keyframes fadeIn {
   from { opacity: 0; }
-  to { opacity: 1; }
+  to   { opacity: 1; }
 }
 
 #planet-modal {
@@ -759,19 +635,9 @@ box-shadow: 0 0 5px rgba(255,255,255,0.3);
 }
 
 @keyframes terminalBoot {
-  0% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.95);
-    filter: blur(10px);
-  }
-  50% {
-    opacity: 0.5;
-  }
-  100% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-    filter: blur(0);
-  }
+  0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.95); filter: blur(10px); }
+  50%  { opacity: 0.5; }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1); filter: blur(0); }
 }
 
 .modal-container {
@@ -781,23 +647,21 @@ box-shadow: 0 0 5px rgba(255,255,255,0.3);
   overflow-y: auto;
   background: #000;
   border: 3px solid #00ff00;
-  border-radius: 0; 
+  border-radius: 0;
   padding: 30px;
-  box-shadow: 
+  box-shadow:
     0 0 20px rgba(0, 255, 0, 0.5),
     0 0 40px rgba(0, 255, 0, 0.3),
     inset 0 0 50px rgba(0, 255, 0, 0.05);
-  font-family: 'Courier New', monospace; 
+  font-family: 'Courier New', monospace;
   color: #00ff00;
   animation: screenFlicker 0.1s infinite;
 }
 
-
 @keyframes screenFlicker {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.98; }
+  50%      { opacity: 0.98; }
 }
-
 
 .scanlines {
   position: absolute;
@@ -817,11 +681,9 @@ box-shadow: 0 0 5px rgba(255,255,255,0.3);
   z-index: 10;
 }
 
-
 .hologram-effect {
   display: none;
 }
-
 
 .close-btn {
   position: absolute;
@@ -845,18 +707,16 @@ box-shadow: 0 0 5px rgba(255,255,255,0.3);
   box-shadow: 0 0 15px #00ff00;
 }
 
-
 .terminal-container {
   position: relative;
   z-index: 5;
   line-height: 1.8;
 }
 
-
 .terminal-line {
   font-size: 14px;
   color: #00ff00;
-  text-shadow: 
+  text-shadow:
     0 0 5px rgba(0, 255, 0, 0.8),
     0 0 10px rgba(0, 255, 0, 0.4);
   margin: 2px 0;
@@ -864,7 +724,6 @@ box-shadow: 0 0 5px rgba(255,255,255,0.3);
   word-wrap: break-word;
   font-family: 'Courier New', monospace;
 }
-
 
 .cursor {
   display: inline-block;
@@ -875,10 +734,9 @@ box-shadow: 0 0 5px rgba(255,255,255,0.3);
 }
 
 @keyframes cursorBlink {
-  0%, 49% { opacity: 1; }
+  0%, 49%  { opacity: 1; }
   50%, 100% { opacity: 0; }
 }
-
 
 .terminal-line:first-child,
 .terminal-line:nth-child(2) {
@@ -886,19 +744,10 @@ box-shadow: 0 0 5px rgba(255,255,255,0.3);
   font-weight: bold;
 }
 
-
-.terminal-line:contains('>>') {
-  color: #00ff00;
-  font-weight: bold;
-  margin-top: 10px;
-  text-decoration: underline;
-}
-
-
 .terminal-line:nth-child(4) {
   font-size: 24px;
   color: #00ff00;
-  text-shadow: 
+  text-shadow:
     0 0 10px rgba(0, 255, 0, 1),
     0 0 20px rgba(0, 255, 0, 0.5);
   margin: 10px 0;
@@ -909,7 +758,6 @@ box-shadow: 0 0 5px rgba(255,255,255,0.3);
   color: #00cc00;
   margin-bottom: 10px;
 }
-
 
 .modal-container::-webkit-scrollbar {
   width: 10px;
@@ -930,7 +778,6 @@ box-shadow: 0 0 5px rgba(255,255,255,0.3);
   box-shadow: 0 0 10px #00ff00;
 }
 
-
 .modal-container::before {
   content: '';
   position: absolute;
@@ -947,13 +794,12 @@ box-shadow: 0 0 5px rgba(255,255,255,0.3);
   z-index: 15;
 }
 
-
 @keyframes blink {
-  0%, 49% { opacity: 1; }
+  0%, 49%  { opacity: 1; }
   50%, 100% { opacity: 0; }
 }
 
-
+/* Modal responsive */
 @media (max-width: 768px) {
   .modal-container {
     width: 95vw;
@@ -961,12 +807,10 @@ box-shadow: 0 0 5px rgba(255,255,255,0.3);
     padding: 20px;
     font-size: 16px;
   }
-
   .terminal-line {
     font-size: 16px;
     line-height: 1.6;
   }
-
   .terminal-line:nth-child(4) {
     font-size: 22px;
   }

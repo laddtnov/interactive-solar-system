@@ -4,91 +4,84 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moon Orbit</title>
+    <title>Solar System — Gravity Simulation</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 <canvas id="stars-bg"></canvas>
+
+<!-- Speed HUD -->
+<div id="speed-hud">1x</div>
+<div id="speed-controls">
+  <button onclick="window.__sim?.speedDown()">&minus;</button>
+  <button onclick="window.__sim?.togglePause()">&#9208;</button>
+  <button onclick="window.__sim?.speedUp()">+</button>
+</div>
+
 <div class="space">
-<div class="sun"></div>
-<div class="orbit mercury-orbit">
-<div class="mercury"></div>
-</div>
-<div class="orbit venus-orbit">
-<div class="venus"></div>
-</div>
-<div class="orbit earth-orbit">
-<div class="earth">
-<div class="orbit moon-orbit">
-<div class=" satellite moon"></div>
-</div>
-</div>
-</div>
-<div class="orbit mars-orbit">
-<div class="mars">
-<div class="orbit phobos-orbit">
-<div class="satellite phobos"></div></div>
-<div class="orbit deimos-orbit">
-<div class="satellite deimos"></div></div>
-</div>
-</div>
+  <!-- Orbit trail canvas (behind planets) -->
+  <canvas id="trail-canvas" width="1200" height="1200"></canvas>
 
-<div class="asteroid-belt" data-name="asteroid-belt"></div>
-<div class="orbit jupiter-orbit">
-<div class="jupiter">
-<div class="jupiter-rings"></div>
-<div class="orbit io-orbit"><div class="satellite io"></div></div>
-<div class="orbit europa-orbit"><div class="satellite europa"></div></div>
-<div class="orbit ganymede-orbit"><div class="satellite ganymede"></div></div>
+  <!-- Sun -->
+  <div class="sun" data-body="sun"></div>
 
-</div>
-</div>
-<div class="orbit saturn-orbit">
-<div class="saturn">
-<div class="saturn-rings"></div>
-<div class="orbit titan-orbit"><div class="satellite titan"></div></div>
+  <!-- Planets (flat — no orbit wrappers) -->
+  <div class="mercury" data-body="mercury"></div>
+  <div class="venus" data-body="venus"></div>
+  <div class="earth" data-body="earth"></div>
+  <div class="mars" data-body="mars"></div>
+  <div class="jupiter" data-body="jupiter">
+    <div class="jupiter-rings"></div>
+  </div>
+  <div class="saturn" data-body="saturn">
+    <div class="saturn-rings"></div>
+  </div>
+  <div class="uranus" data-body="uranus">
+    <div class="uranus-rings"></div>
+  </div>
+  <div class="neptune" data-body="neptune">
+    <div class="neptune-rings"></div>
+  </div>
+  <div class="pluto" data-body="pluto"></div>
 
-</div>
-</div>
-<div class="orbit uranus-orbit">
-<div class="uranus">
-<div class="uranus-rings"></div>
-<div class="orbit titania-orbit"><div class="satellite titania"></div></div>
-</div>
-</div>
+  <!-- Moons / Satellites (flat siblings) -->
+  <div class="satellite moon" data-body="moon"></div>
+  <div class="satellite phobos" data-body="phobos"></div>
+  <div class="satellite deimos" data-body="deimos"></div>
+  <div class="satellite io" data-body="io"></div>
+  <div class="satellite europa" data-body="europa"></div>
+  <div class="satellite ganymede" data-body="ganymede"></div>
+  <div class="satellite titan" data-body="titan"></div>
+  <div class="satellite titania" data-body="titania"></div>
+  <div class="satellite triton" data-body="triton"></div>
+  <div class="satellite charon" data-body="charon"></div>
 
-<div class="orbit neptune-orbit">
-<div class="neptune">
-<div class="neptune-rings"></div>
-<div class="orbit triton-orbit"><div class="satellite triton"></div></div>
-</div>
-</div>
-<div class="orbit pluto-orbit">
-<div class="pluto">
-<div class="orbit charon-orbit"><div class="satellite charon"></div></div>
-</div>
-</div>
-<div id="planet-info">
+  <!-- Asteroid Belt (CSS-only, unchanged) -->
+  <div class="asteroid-belt" data-name="asteroid-belt"></div>
+
+  <!-- Tooltip -->
+  <div id="planet-info">
     <div id="planet-content"></div>
-</div>
-<!-- Modal Overlay -->
-<div id="modal-overlay"></div>
+  </div>
 
-<!-- Planet Data Modal -->
-<div id="planet-modal">
-  <div class="modal-container">
-    <div class="hologram-effect"></div>
-    <div class="scanlines"></div>
-    <button id="close-modal" class="close-btn">✕</button>
-    <div id="modal-content"></div>
+  <!-- Modal Overlay -->
+  <div id="modal-overlay"></div>
+
+  <!-- Planet Data Modal -->
+  <div id="planet-modal">
+    <div class="modal-container">
+      <div class="hologram-effect"></div>
+      <div class="scanlines"></div>
+      <button id="close-modal" class="close-btn">&#10005;</button>
+      <div id="modal-content"></div>
+    </div>
   </div>
 </div>
-</div>
-<script src="script.js">
-</script>
+
+<script type="module" src="js/main.js"></script>
 </body>
 </html>
